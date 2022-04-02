@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            {% if category %}
+            <h1 style="text-align: center; color: #fff;">Found category: <span>{{message}}</span></h1>
+            <div class="container-fluid" style="display: flex;
+            flex-wrap: wrap;">
+                {% for image in images %}
+                {% if message == image.category.name %}
+                <div class="col-sm-6 col-md-5 col-xs-3" id="polaroid">
+                    <img src="{{image.image.url}}" class="img-fluid" id="gallery" class="btn"
+                        data-target="#{{image.id}}" data-toggle="modal">
+                    <div class="row" style="padding-top:1%;">
+                        <div class="col-md-9">
+                            <h2 style="text-align: center;">{{image.name}}</h2>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn" onclick="copyToClipboard('127.0.0.1:8000{{image.image.url}}')">copy
+                                link</button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="">
+                        <div class="modal" id="{{image.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-8 col-md-8 ">
+                                                <img src="{{image.image.url}}" class="img-fluid" id="modal">
+                                            </div>
+                                            <div class="col-sm-6 col-md-6" id="description">
+                                                <ul style="list-style-type:none; color:white;">
+                                                    <li>NAME: {{image.name}}</li>
+                                                    <li>DESCRIPTION: {{image.description}}</li>
+                                                    <li>CATEGORY: {{image.category.name}}</li>
+                                                    <li>UPLOADED: {{image.upload_date}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <h2> Found 0 images for {{message}} category</h2>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(str) {
+            const el = document.createElement('textarea');
+            el.value = str;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        };
+    </script>
+
+    <style>
+        body {
+            background-color: #000;
+            overflow-x: hidden;
+        }
+
+        .img-fluid {
+            height: 350px;
+            /* width: 100%; */
+        }
+
+        #polaroid {
+            padding-top: 1%;
+            margin: 1%;
+            background-color: #f2f4f7;
+            border: solid 1px grey;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+</body>
+
+</html>
+{% endblock %}
