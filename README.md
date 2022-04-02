@@ -2,6 +2,9 @@
 
 An application where a single django administrator can upload and display images and filter them by their category or location.
 
+### Home page
+<img src="MYGALLERY/picimage.png">
+
 ## Getting Started
 
 *   Fork the repository
