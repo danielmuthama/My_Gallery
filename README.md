@@ -1,4 +1,4 @@
-# MyGallery
+# MyGallery App
 
 An application where a single django administrator can upload and display images and filter them by their category or location.
 
